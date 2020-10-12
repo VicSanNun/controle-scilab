@@ -1,0 +1,85 @@
+\section{Representação do Espaço de Estados no Scilab}
+Considera o seguinte sistema:
+
+$$
+\begin{bmatrix}
+\dot{x}_{1}\\\dot{x}_{2}
+\end{bmatrix} = \begin{bmatrix}
+0 & 1\\
+-2 & -3
+\end{bmatrix} \begin{bmatrix}
+x_{1}\\x_{2}
+\end{bmatrix}+\begin{bmatrix}
+1 & 0\\
+0 & 1
+\end{bmatrix} \begin{bmatrix}
+u_{1}\\u_{2}
+\end{bmatrix}
+$$
+
+$$
+y=\begin{bmatrix}
+1 & 0
+\end{bmatrix} \begin{bmatrix}
+x_{1} \\ x_{2}
+\end{bmatrix} + \begin{bmatrix}
+0 & 0
+\end{bmatrix} \begin{bmatrix}
+u_{1} \\ u_{2}
+\end{bmatrix}
+$$
+
+Sabe-se que a representação geral de equações de estado é:
+
+$$\textbf{$\dot{x}$} = \textbf{$Ax$} + \textbf{$Bu$}$$
+$$\textbf{$y$} = \textbf{$Cx$} + \textbf{$Du$}$$
+
+Para representar esse sistema no Scilab basta representar as matrizes A, B, C e D e utilizar a função \verb|syslin|. Essa função nos permite gerar um sistema linear a partir das matrizes de representação no espaço de estados\footnote{Para saber mais ver \verb|https://help.scilab.org/docs/6.0.1/pt\_BR/syslin.html|}:
+
+ \begin{verbatim}
+     --> A = [0 1;-2 -3];
+     --> B = [1 0;0 1];
+     --> C = [1 0];
+     --> D = [0 0];
+     --> [sistema] = syslin('c', A, B, C, D);
+ \end{verbatim}
+\textbf{Obs}: O primeiro parâmetro \verb|'c'| significa que estamos trabalhando no domínio do tempo contínuo. Para trabalhar com tempo discreto use \verb|'d'|.
+
+Ao chamar a matriz \verb|sistema| no console do Scilab, obtemos:
+
+\begin{verbatim}
+sistema  = 
+
+
+ sistema(1)  (state-space system:)
+
+  "lss"  "A"  "B"  "C"  "D"  "X0"  "dt"
+
+ sistema(2)= A matrix =
+
+   0.   1.
+  -2.  -3.
+
+ sistema(3)= B matrix =
+
+   1.   0.
+   0.   1.
+
+ sistema(4)= C matrix =
+
+   1.   0.
+
+ sistema(5)= D matrix =
+
+   0.   0.
+
+ sistema(6)= X0 (initial state) =
+
+   0.
+   0.
+
+ sistema(7)= Time domain =
+
+  "c"
+
+\end{verbatim}

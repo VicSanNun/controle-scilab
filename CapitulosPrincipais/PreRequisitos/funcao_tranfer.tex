@@ -1,0 +1,40 @@
+\section{Representando Função de Transferência no Scilab}
+
+%Para trechos maiores de código, utilizar o lstlisting. Para trechos menores, utilizar o verbatim
+% \begin{lstlisting}
+%     s=%s;
+%     G = (6.3223*s^2+18*s+12.8112)/(s^4+6*s^3+11.3223*s^2+18*s+12.8112);
+% \end{lstlisting}
+
+%Depois utilizar Tikz para fazer diagrama de bloco aqui
+
+Quero representar a função de transferência abaixo no Scilab:
+\\
+\\
+$$G(s) = \frac{6.3223s^{2}+18s+12.8112}{s^{4}+6s^{3}+11.3223s^{2}+ 18s + 12.8112  
+}$$
+
+Para fazer isso eu posso escrever as seguintes linhas de código:
+
+\begin{verbatim}
+    --> s = %s;
+    --> G = (6.3223*s^2+18*s+12.8112)/(s^4+6*s^3+11.3223*s^2+18*s+12.8112);
+\end{verbatim}
+
+Na primeira linha, onde vemos \verb|s=%s|, estamos declarando a variável \verb|s| e dizendo que ela é igual a variável interna do Scilab, \verb|%s|. Essa variável interna é utilizada para trabalhar com polinômios\footnote{Para mais informações ver \verb|https://help.scilab.org/docs/5.5.2/fr\_FR/percents.html|}. Podemos conseguir o mesmo resultado utilizando \verb|s = poly(0, "s");|. Porém, por questão de praticidade, adotamos, nesse livro, o modo anterior.
+
+Chamando o \verb|G|, no console do Scilab, obtemos:
+
+\begin{verbatim}
+    G  = 
+
+                                     
+        12.8112 +18s +6.3223s^2       
+   --------------------------------  
+   12.8112 +18s +11.3223s^2 +6s^3 +s^4
+\end{verbatim}
+
+Pronto, agora temos nossa função de transferência gravada na memória do Scilab e podemos trabalhar com ela usando a variável \verb|G|.
+
+\newpage
+

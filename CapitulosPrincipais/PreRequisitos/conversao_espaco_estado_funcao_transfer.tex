@@ -1,0 +1,149 @@
+\section{Conversão de Função de Transferência para Espaço de Estados}
+ Considere a seguinte a seguinte função de tranferência:
+ 
+ $$H(s) = \frac{2s+1}{s^{2}+3s+1}$$
+ 
+ Para obter as matrizes de representação no espaço de estado utiliza-se a função \verb|tf2ss|\footnote{Para mais informações ver \verb|https://help.scilab.org/docs/5.3.3/en\_US/tf2ss.html|}. Então, depois de definir $H(s)$, basta aplicá-lo na função.
+ 
+ \begin{verbatim}
+    --> H_ss = tf2ss(H);
+ \end{verbatim}
+ 
+ Chamando \verb|H_ss| obtêm-se:
+ 
+ \begin{verbatim}
+     H_ss  = 
+
+
+ H_ss(1)  (state-space system:)
+
+  "lss"  "A"  "B"  "C"  "D"  "X0"  "dt"
+
+ H_ss(2)= A matrix =
+
+  -2.4   0.2
+   2.2  -0.6
+
+ H_ss(3)= B matrix =
+
+  -1.5491933
+   0.7745967
+
+ H_ss(4)= C matrix =
+
+  -1.2909944  -2.220D-16
+
+ H_ss(5)= D matrix =
+
+   0.
+
+ H_ss(6)= X0 (initial state) =
+
+   0.
+   0.
+
+ H_ss(7)= Time domain =
+
+    []
+ \end{verbatim}
+ 
+ Onde é observa-se que:
+ 
+ $$
+ A=\begin{bmatrix} 
+    -2.4 & 0.2\\
+     2.2 & -0.6 
+ \end{bmatrix}
+ $$
+ $$
+ B=\begin{bmatrix} 
+    -1.5491933\\0.7745967
+ \end{bmatrix}
+ $$
+ $$
+ C=\begin{bmatrix} 
+    -1.2909944 & -2.220D-16
+ \end{bmatrix}
+ $$
+ $$
+ D=[0]
+ $$
+ 
+ \section{Conversão de Espaço de Estados para Função de Transferência}
+ Considera a seguinte representação em espaço de estados.
+ 
+ $$
+\begin{bmatrix}
+\dot{x}_{1}\\\dot{x}_{2}
+\end{bmatrix} = \begin{bmatrix}
+0 & 1\\
+-2 & -3
+\end{bmatrix} \begin{bmatrix}
+x_{1}\\x_{2}
+\end{bmatrix}+\begin{bmatrix}
+1 & 0\\
+0 & 1
+\end{bmatrix} \begin{bmatrix}
+u_{1}\\u_{2}
+\end{bmatrix}
+$$
+
+$$
+y=\begin{bmatrix}
+1 & 0
+\end{bmatrix} \begin{bmatrix}
+x_{1} \\ x_{2}
+\end{bmatrix} + \begin{bmatrix}
+0 & 0
+\end{bmatrix} \begin{bmatrix}
+u_{1} \\ u_{2}
+\end{bmatrix}
+$$
+
+Agora isola-se as matrizes A, B, C e D:
+
+$$A=\begin{bmatrix}
+    0 & 1 \\
+    -2 & -3
+\end{bmatrix}$$
+
+$$B=\begin{bmatrix}
+    1 & 0 \\
+    0 & 1
+\end{bmatrix}$$
+
+$$C=\begin{bmatrix}
+    1 & 0
+\end{bmatrix}$$
+
+$$D=\begin{bmatrix}
+    0 & 0
+\end{bmatrix}$$
+
+Agora basta usar a função \verb|syslin|, para criar um sistema linear a partir dessas matrizes e depois utilizar a função \verb|ss2tf|\footnote{Para saber mais ver \verb|https://help.scilab.org/docs/5.3.3/en\_US/ss2tf.html|}.
+
+\begin{verbatim}
+    --> [sistema] = syslin('c', A, B, C, D);
+    --> sistema_tf = ss2tf(sistema);
+\end{verbatim}
+
+Chamando \verb|sistema_tf| obtêm-se:
+
+\begin{verbatim}
+    sistema_tf  = 
+
+                         
+         3 +s         1      
+       ---------  ---------  
+       2 +3s +s^2  2 +3s +s^2
+\end{verbatim}  
+
+\newpage
+
+Ou seja:
+
+$$\frac{Y(s)}{U_{1}(s)} = \frac{s+3}{s^{2}+3s+2}$$
+\\
+e
+\\
+$$\frac{Y(s)}{U_2{s}} = \frac{1}{s^{2}+3s+2}$$
